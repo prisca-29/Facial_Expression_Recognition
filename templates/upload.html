@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- Blurred Emoji Background -->
+    <div class="emoji-bg"></div>
+
+    <div class="content-box fade-in">
+        <h1>📤 Upload Image for Emotion Detection</h1>
+
+        <form id="uploadForm">
+            <input type="file" id="imgFile" required>
+            <button type="submit" class="button">Predict</button>
+        </form>
+
+        <div id="previewContainer" style="display:none; margin-top:30px;">
+            <img id="preview"
+                 style="width:450px; border-radius:15px; display:block; margin:auto;
+                 box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+        </div>
+
+        <h2 id="result" style="margin-top:25px;"></h2>
+    </div>
+
+<script>
+const emojiMap = {
+    angry: "😡",
+    disgust: "🤢",
+    fear: "😨",
+    happy: "😄",
+    neutral: "😐",
+    sad: "😢",
+    surprise: "😲"
+};
+
+document.getElementById("uploadForm").onsubmit = async (e) => {
+    e.preventDefault();
+
+    let file = document.getElementById("imgFile").files[0];
+
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        document.getElementById("preview").src = e.target.result;
+        document.getElementById("previewContainer").style.display = "block";
+    };
+    reader.readAsDataURL(file);
+
+    let formData = new FormData();
+    formData.append("image", file);
+
+    let res = await fetch("/predict_image", {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await res.json();
+
+    document.getElementById("result").innerHTML =
+        `${emojiMap[data.label]} Emotion: <b>${data.label}</b> (${data.confidence.toFixed(2)}%)`;
+};
+</script>
+
+</body>
+</html>
