@@ -1,0 +1,67 @@
+/* ---- BLURRED EMOJI BACKGROUND ---- */
+.emoji-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-image: url("https://i.imgur.com/eQOeU4u.png"); /* emoji pattern */
+    background-size: 260px;
+    background-repeat: repeat;
+    opacity: 0.45;          /* emoji visibility */
+    filter: blur(6px);      /* blur */
+    pointer-events: none;
+}
+
+/* ---- MAIN CONTENT ---- */
+.content-box {
+    position: relative;
+    z-index: 5; /* ON TOP OF BLURRED EMOJIS */
+    background: rgba(255, 255, 255, 0.85);
+    padding: 50px;
+    margin: 60px auto;
+    width: fit-content;
+    border-radius: 18px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+/* ---- GENERAL PAGE ---- */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: #444;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #007bff;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    background: #0056b3;
+}
+
+.fade-in {
+    animation: fade 0.8s ease-in-out;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
